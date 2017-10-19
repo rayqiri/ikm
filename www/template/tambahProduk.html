@@ -1,0 +1,92 @@
+<!-- Title for header bar (refer to www/index.html) -->
+<ion-view title="Tambah Produk">
+  <!-- ======================
+  LEFT SIDE BUTTON
+  ====================== -->
+  <ion-nav-buttons side="left">
+    <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+  </ion-nav-buttons>
+
+  <!-- ======================
+  RIGHT SIDE BUTTON
+  ====================== -->
+  <ion-nav-buttons side="right">
+    <button class="button button-icon icon ion-paper-airplane" ng-click="simpanProduk()"> Save</button>
+  </ion-nav-buttons>
+  
+  
+  <!-- ======================
+  MAIN CONTENT SECTION
+  ====================== -->
+  <ion-content class="has-header gem-ion-content profile-edit">
+    <!-- ======================
+    GEMIONIC PROFILE ADD PICTURE BANNER
+    ====================== -->
+    
+    <!-- ======================
+    END GEMIONIC PROFILE ADD PICTURE BANNER
+    ====================== -->
+
+    <!-- Standard Ionic List -->
+
+    <div class="list">
+    <p>{{pesan}}</p>
+        <label class="item item-input item-select">
+        <div class="input-label">
+          Kategori
+        
+        <select ng-model="produk.kategori" required="required">
+        <option ng-selected="produk.kategori == kategori.value" 
+        ng-repeat="kategori in kategoris" 
+        ng-value="kategori.value">{{kategori.value}}</option>
+        </select>
+        </div>
+      </label>
+
+      <label class="item item-input item-stacked-label">
+        <span class="input-label">Nama Produk</span>
+        <input type="text" ng-model="produk.nama" placeholder="Jenang Kudus" required="required">
+      </label>
+      <label class="item item-input item-stacked-label">
+        <span class="input-label">Keyword</span>
+        <input type="text" ng-model="produk.keyword" placeholder="makanan, jenang, minuman" required="required">
+      </label>
+      <label class="item item-input item-select">
+    <div class="input-label">
+      Kondisi
+    </div>
+    <select ng-model="produk.status" required="required">
+      <option ng-selected="produk.status == 'Baru'" ng-value="'Baru'">Baru</option>
+      <option ng-selected="produk.status == 'Bekas'" ng-value="'Bekas'">Bekas</option>
+    </select>
+  </label>
+      
+      <label class="item item-input item-stacked-label">
+        <span class="input-label">Deskripsi</span>
+        <textarea placeholder="Deskripsi" ng-model="produk.deskripsi" required="required"></textarea>
+      </label>
+      <!-- <label class="item item-input item-stacked-label">
+        <span class="input-label">Gambar</span>
+       <input type="file" fileread="uploadme" ng-model="produk.file"/>   
+    <p>
+     <img ng-src="{{uploadme}}" width="100" height="50" alt="Image preview...">
+      
+    </p>
+      </label>-->
+    </div>
+
+    <!-- Separator Title (for forms and mini headings) -->
+    <div class="profile-separator-title"><i class="ion-gear-a"></i> Upload Gambar</div> 
+
+    <!-- Standard Ionic List -->
+    <div class="bar bar-positive">
+      
+         <div class="button-bar">
+        <button class="button btn-primary icon-left ion-camera" ng-click="loadImage()">Ambil Gambar</button>
+        <!--<button class="button icon-left ion-upload" ng-click="uploadImage()" ng-disabled="image === null">Upload</button>-->
+      </div>
+      
+    </div>
+    <img ng-src="{{pathForImage(image)}}" style="width: 100%; height: 100%;">
+  </ion-content>
+</ion-view>

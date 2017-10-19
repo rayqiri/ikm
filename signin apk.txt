@@ -1,0 +1,1 @@
+jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore ikm-kudus.keystore ikm-kudus.apk ikm-kudus

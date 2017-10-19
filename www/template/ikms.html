@@ -1,0 +1,116 @@
+<!-- Title for header bar (refer to www/index.html) -->
+<ion-view title="IKM">
+  <!-- ======================
+  LEFT SIDE BUTTON
+  ====================== -->
+  <ion-nav-buttons side="left" hide-back-button="true">
+    <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+  </ion-nav-buttons>
+
+  <!-- ======================
+  RIGHT SIDE BUTTON
+  ====================== -->
+  
+  <!-- ======================
+  MAIN CONTENT SECTION
+  ====================== -->
+  <ion-content class="has-header gem-ion-content">
+    <!-- ======================
+    GEMIONIC PROFILE SECTION
+    ====================== -->
+    <div class="gem-profile-media">
+      <div class="gem-profile-details profile2">
+        <!-- Profile Name -->
+        <h3 class="gem-white">{{ikm.name_surname}}</h3>
+        <!-- Profile Description text -->
+        
+        <!-- text stats -->
+        <div class="gem-center">
+         <i class="icon ion-android-call"></i> {{ikm.phone}} | <i class="icon ion-android-mail"></i> {{ikm.mail}}
+        </div>
+        <div class="gem-center">
+
+          <a ng-click="inApp({{ikm.gplus_link}})" ng-if="ikm.gplus_link !='' "><i class="icon ion-social-googleplus larger"></i></a>  
+          <a ng-click="inApp(ikm.facebook_link)" ng-if="ikm.facebook_link !='' "><i class="icon ion-social-facebook larger"></i></a>
+          <a ng-click="inApp(ikm.youtube_link)" ng-if="ikm.youtube_link !='' "><i class="icon ion-social-youtube larger"></i></a>
+          <a ng-click="inApp(ikm.twitter_link)" ng-if="ikm.twitter_link !=''"><i class="icon ion-social-twitter larger"></i></a>
+          <a ng-click="inApp(ikm.linkedin_link)" ng-if="ikm.linkedin_link !=''"><i class="icon ion-social-linkedin larger"></i></a>
+        </div>
+      </div>
+      <!-- Background Image -->
+      <img ng-if="ikm.image_user_filename != null" src="http://nvmplay.com/ikm/files/{{ikm.image_user_filename}}" alt="" class="fluid-image " style="vertical-align:middle;">
+      <img ng-if="ikm.image_user_filename == null" src="http://nvmplay.com/ikm/templates/boomerang/assets/img/user-agent.png" alt="" class="fluid-image " style="vertical-align:middle;">
+    </div>
+    <!-- ======================
+    END GEMIONIC PROFILE SECTION
+    ====================== -->
+
+    <!-- Basic Tabs - not hooked qith angular -->  
+ <div class="tabs gem-position-static profile-tabs">
+  <a ng-repeat="button in buttons"
+       ng-class="{'active': $index === current}"
+       ng-click="slide($index)"
+       class="tab-item"><i class="{{ button.class }}"></i> {{ button.name }}</a>
+      
+    </div>
+     <ion-slide-box on-slide-changed="activateTabs($index)" show-pager="false">
+      <ion-slide>
+               
+    <div class="profile-feed">
+      <div class="row">
+        <div class="col" >
+            <div class="profile-post" ng-repeat="product in products">
+              <a ng-href="#/app/products/{{product.listing.property_id}}">
+      <img ng-if="product.listing.image_filename !=''" src="http://nvmplay.com/ikm/files/{{product.listing.image_filename}}" alt="" class="fluid-image">
+      <img ng-if="product.listing.image_filename == null " src="http://nvmplay.com/ikm/files/no_image.jpg" alt="" class="fluid-image">
+       </a>
+              <p>{{product.listing.json_object.field_10}}</p>
+              <span class="profile-post-stat"><i class="ion-android-star" ng-if="product.listing.field_56_int != null"> {{product.listing.field_56_int}}</i> <i class="ion-android-star" ng-if="product.listing.field_56_int == null"> 0</i></span>
+              <span class="profile-post-stat"><i class="ion-eye"> {{product.listing.counter_views}}</i></span>
+               <span class="profile-post-stat"><i class="icon ion-cash" ng-if="product.listing.field_36_int != null"> {{product.listing.field_36_int}}</i>
+            <i class="icon ion-cash" ng-if="product.listing.field_36_int == null"> Tanya Penjual</i></span>
+            </div>
+            </div>
+      </div>
+    </div>
+    
+            </ion-slide>
+
+            <ion-slide>
+                 <div class="profile-feed">
+      <div class="row">
+        <div class="col" >
+            <div class="profile-post">
+
+             <p align="justify"><h3>{{ikm.name_surname}}</h3></p>
+             <p ng-bind-html="deskripsi" align="justify"></p>
+             <p align="justify">Alamat <span class="profile-post-stat"> : </span> <br>{{ikm.address}}</p>
+              <p align="justify">No Telp <span class="profile-post-stat"> : </span> <br>{{ikm.phone}}</p>
+               <p align="justify">Email <span class="profile-post-stat"> : </span> <br>{{ikm.mail}}</p>
+                <p align="justify">Facebook <span class="profile-post-stat"> : </span> <br>{{ikm.facebook_link}}</p>
+                 <p align="justify">Google+ <span class="profile-post-stat"> : </span> <br>{{ikm.gplus_link}}</p>
+                  <p align="justify">Twitter <span class="profile-post-stat"> : </span> <br>{{ikm.twitter_link}}</p>
+                   <p align="justify">Youtube <span class="profile-post-stat"> : </span> <br>{{ikm.youtube_link}}</p>
+            </div>
+            </div>
+            </div>
+            </div>
+            </ion-slide>
+            
+            <ion-slide>
+               <div class="profile-feed">
+      <div class="row">
+        <div class="col" >
+            <div class="profile-post">
+             <p ng-bind-html="trustSrc(link)"></p>
+            </div>
+            </div>
+            </div>
+            </div>
+            </ion-slide>
+     </ion-slide-box>
+    
+
+
+  </ion-content>
+</ion-view>

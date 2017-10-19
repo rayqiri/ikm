@@ -1,0 +1,19 @@
+
+<ion-view view-title="Products">
+  <ion-content>
+        <ion-list class="products-list" ng-repeat="product in products">
+            <ion-item>
+                <a href="#/app/products/{{product.id}}">
+                    <div class="item item-image">
+                        <img src="http://nvmplay.com/ikm/files/{{product.listing.image_filename}}" width="100%" />
+                    </div>
+                    <h1 class="product-title">{{product.listing.json_object.field_10}}</h1>
+                </a>
+                <div class="product-meta">
+                    <div ng-bind-html="product.price_html" class="price"></div>
+                </div>
+                <a class="view-btn button button-royal" href="#/app/products/{{product.id}}">View Detail</a>
+            </ion-item>
+        </ion-list>
+  </ion-content>
+</ion-view>

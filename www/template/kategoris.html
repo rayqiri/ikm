@@ -1,0 +1,109 @@
+<!-- Title for the ion view -->
+<ion-view title="{{kategori}}">
+  <!-- ======================
+  LEFT SIDE BUTTON
+  ====================== -->
+  <ion-nav-buttons side="left">
+    <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+  </ion-nav-buttons>
+  <!-- ======================
+  /END LEFT SIDE BUTTON
+  ====================== -->
+
+  <!-- ======================
+  RIGHT SIDE BUTTON
+  ====================== -->
+  <!-- ======================
+  /END RIGHT SIDE BUTTON
+  ====================== -->
+  
+  <!-- ======================
+  MAIN CONTENT SECTION
+  ====================== -->
+  <ion-content class="has-header gem-ion-content feed" overflow-scroll='false'>
+  <ion-refresher on-refresh="doRefresh()"
+                    pulling-text="Tarik untuk refresh..."
+                     pulling-icon="ion-arrow-down-c"
+                     refreshing-text="Refreshing!"
+                     refreshing-spinner="circles">
+                     
+      </ion-refresher>
+
+    <!-- ======================
+    SEARCH FORM - STANDARD IONIC MARKUP
+    ====================== -->  
+    <div class="item item-input-inset">
+      <label class="item-input-wrapper">
+        <i class="icon ion-search placeholder-icon"></i>
+        <input type="text" placeholder="Cari Produk IKM" ng-model="search.listing.search_values">
+      </label>
+    </div>
+    <!-- ======================
+    /END SEARCH FORM
+    ====================== --> 
+
+    <!-- ======================
+    POST - image only
+    ====================== --> 
+     <div class="news-media" ng-repeat="product in products | filter:search | limitTo:batas">
+    <div class="news-item">
+     <a ng-href="#/app/ikms/{{product.listing.agent_id}}">
+      <div class="news-thumb">
+        <img ng-if="product.listing.image_user_filename != null" src="http://nvmplay.com/ikm/files/{{product.listing.image_user_filename}}" alt="" class="img">
+        <img ng-if="product.listing.image_user_filename == null" src="http://nvmplay.com/ikm/templates/boomerang/assets/img/user-agent.png" alt="" class="img">
+      </div>
+      </a>
+    <div class="news-content">
+        <h4>{{product.listing.json_object.field_10}}</h4>
+        <div class="gem-tiny-text news-item-stats">{{product.listing.name_surname}}
+          <i class="icon ion-warning"></i> 
+          <span class="news-comment-summary">
+          <i class="ion-clock"></i> <time am-time-ago="product.listing.date_modified" title="{{ product.listing.date_modified | amDateFormat: 'dddd, MMMM Do YYYY, h:mm a' }}"></time> 
+            
+          </span>
+        </div>
+      </div>
+      
+    </div>
+   
+     <a ng-href="#/app/products/{{product.listing.id}}">
+      <img ng-if="product.listing.image_filename !=''" src="http://nvmplay.com/ikm/files/{{product.listing.image_filename}}" alt="" class="fluid-image">
+      <img ng-if="product.listing.image_filename == null " src="http://nvmplay.com/ikm/files/no_image.jpg" alt="" class="fluid-image">
+       </a>
+        <i class="icon ion-cash" ng-if="product.listing.field_36_int != null"> {{product.listing.field_36_int}}</i>
+            <i class="icon ion-cash" ng-if="product.listing.field_36_int == null"> Tanya Penjual</i>
+      <div class="media-social-stats">
+       
+      
+       
+        
+       
+      
+      </div>
+      <br><br>
+    </div>
+    
+    <!-- ======================
+    POSTER - profile thumb, name and post stats
+    ====================== --> 
+
+    
+      
+    <!-- ======================
+    /END POSTER
+    ====================== --> 
+
+    <!-- ======================
+    POST - image only
+    ====================== --> 
+    
+    <!-- ======================
+    /END POSTER
+    ====================== --> 
+  </ion-content>
+   <ion-infinite-scroll on-infinite="doInfinite()" distance="10%">
+    </ion-infinite-scroll>
+  <!-- ======================
+  END MAIN CONTENT SECTION
+  ====================== -->
+</ion-view>

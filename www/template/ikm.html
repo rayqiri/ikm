@@ -1,0 +1,72 @@
+<!-- Title for the ion view -->
+<ion-view title="IKM List">
+  <!-- ======================
+  LEFT SIDE BUTTON
+  ====================== -->
+  <ion-nav-buttons side="left">
+    <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+  </ion-nav-buttons>
+  <!-- ======================
+  END LEFT SIDE BUTTON
+  ====================== -->
+
+  <!-- ======================
+  RIGHT SIDE BUTTON
+  ====================== -->
+  
+  <!-- ======================
+  END RIGHT SIDE BUTTON
+  ====================== -->
+
+  <!-- ======================
+  MAIN CONTENT SECTION
+  ====================== -->
+  <ion-content class="has-header gem-ion-content padding">
+
+    <!-- Search Box - standard ionic markup -->
+    <div class="item item-input-inset">
+      <label class="item-input-wrapper">
+        <i class="icon ion-search placeholder-icon"></i>
+        <input type="text" placeholder="Cari" ng-model="search.listing.name_surname">
+      </label>
+    </div>
+    <!-- End Search Box -->
+
+    <!-- standard small title heading -->
+    <!--<div class="uppercase label-title">32 friends</div>-->
+    <!-- end standard small title heading -->
+
+    <!-- ======================
+    GEMIONIC FRIEND LIST MODULE
+    ====================== -->
+    <div class="gem-friend-grid clearfix">
+      
+      <!-- Friend List Item  -->
+      <div class="friend-item" ng-repeat="ikm in ikms | filter:search">  
+            <!-- Round Image here. Fluid width and Colored ring stating status -->
+            <a ng-href="#/app/ikms/{{ikm.listing.id}}">
+            <img ng-if="ikm.listing.image_user_filename != null" src="http://nvmplay.com/ikm/files/{{ikm.listing.image_user_filename}}" alt="" class="gem-friend-list-profile-pic">
+            <img ng-if="ikm.listing.image_user_filename == null" src="http://nvmplay.com/ikm/templates/boomerang/assets/img/user-agent.png" alt="" class="gem-friend-list-profile-pic">
+            <!-- Online Status Icon -->
+           </a>
+            <!-- Friend name -->
+            <a ng-href="#/app/ikms/{{ikm.listing.id}}">
+            <p class="friend-name">{{ikm.listing.name_surname}}</p>
+            </a>
+             <div class="online-status"><i class="icon ion-call gem-color-default"></i>{{ikm.listing.phone}}</div>
+      </div>
+      <!-- End Friend List Item  -->
+
+      <!-- Friend List Item  -->
+     
+    <!-- End Friend List Item  -->
+
+    </div>
+
+  </ion-content>
+  <!-- ======================
+  END MAIN CONTENT SECTION
+  ====================== -->
+</ion-view>
+
+

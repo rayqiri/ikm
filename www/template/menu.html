@@ -1,0 +1,58 @@
+  <ion-side-menus>
+
+    <ion-side-menu-content>
+      <ion-nav-bar class="bar-light nav-title-slide-ios7">
+        <ion-nav-back-button class="button-clear"><i class="icon ion-ios7-arrow-back"></i> Back</ion-nav-back-button>
+      </ion-nav-bar>
+      <ion-nav-view name="menuContent" animation="slide-left-right"></ion-nav-view>
+    </ion-side-menu-content>
+    <ion-side-menu side="left">
+      
+      <!-- Sidebar Content -->
+      <ion-content class="gem-sidebar dark">
+        <!-- Profile Box - Extends ionic's .row -->
+        <div class="row gem-sidebar-profile-box">
+          <!-- Profile Thumb -->
+          <div class="col col-25">
+            <img ng-if="status !=true" src="http://nvmplay.com/ikm/admin-assets/img/custom/kudus.png" class="gem-profile-image" alt="">
+            <img ng-if="status ==true" src="http://nvmplay.com/ikm/{{foto}}" class="gem-profile-image" alt="">
+          </div>
+          <!-- End Profile Thumb -->
+
+          <!-- Profile Name -->
+          <div class="col col-50" ng-if="status !=true">
+            <h5 class="title">IKM Kudus</h5>
+            <h6 class="action-links">Dinas Perindustrian, Koperasi dan UMKM</h6>
+          </div>
+          <div class="col col-50" ng-if="status ==true">
+            <h5 class="title">{{username}}</h5>
+            <h6 class="action-links">{{nama}}</h6>
+          </div>
+          <!-- End Profile Name -->
+
+          <!-- Account Settings Icon -->
+          <div class="col col-25 gem-text-center">
+           
+          </div>
+          <!-- End Account Settings Icon -->
+          
+        </div>
+        <!-- End Profile Box -->
+        <ion-list>        
+          <ion-item nav-clear menu-close ng-href="#/app/home" class="item-icon-left"> <i class="icon ion-home"></i> Home</ion-item>
+          <ion-item nav-clear menu-close href="#/app/ikm" class="item-icon-left"><i class="icon ion-person-stalker"></i> IKM</ion-item>
+          <ion-item nav-clear menu-close href="#/app/kategori" class="item-icon-left"> <i class="icon ion-clipboard"></i> Kategori</ion-item>
+          <ion-item nav-clear menu-close ng-if="status ==true" href="#/app/ikms/{{id}}" class="item-icon-left"><i class="icon ion-person"></i> Profile</ion-item>
+           <ion-item nav-clear menu-close ng-if="status ==true" href="#/app/produkikm" class="item-icon-left"><i class="icon ion-bag"></i>Produk</ion-item>
+           <ion-item nav-clear menu-close ng-if="status ==true" href="#/app/tambahproduk" class="item-icon-left"><i class="icon ion-compose"></i>Tambah Produk</ion-item>
+           <ion-item nav-clear menu-close ng-if="status ==true" href="#/app/email" class="item-icon-left"><span class="badge badge-assertive">{{total}}</span> <i class="icon ion-email"></i>Email</ion-item>
+          <ion-item nav-clear menu-close ng-if="status !=true" ng-click="login()" class="item-icon-left"><i class="icon ion-log-in"></i> Login</ion-item>
+          <ion-item nav-clear menu-close ng-if="status ==true" ng-click="doLogout()" class="item-icon-left"><i class="icon ion-log-out"></i> Logout</ion-item>
+          
+
+
+        </ion-list>
+      </ion-content>
+      <!-- End sidemenu content -->
+    </ion-side-menu>
+  </ion-side-menus>

@@ -1,0 +1,98 @@
+<!-- Title for the ion view -->
+<ion-view title="{{email.mail}}">
+  <!-- ======================
+  LEFT SIDE BUTTON
+  ====================== -->
+  <ion-nav-buttons side="left">
+    <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+  </ion-nav-buttons>
+  <!-- ======================
+  /END LEFT SIDE BUTTON
+  ====================== -->
+
+  <!-- ======================
+  RIGHT SIDE BUTTON
+  ====================== -->
+  <!-- ======================
+  /END RIGHT SIDE BUTTON
+  ====================== -->
+  
+  <!-- ======================
+  MAIN CONTENT SECTION
+  ====================== -->
+  <ion-content class="has-header gem-ion-content feed">
+
+    <!-- ======================
+    SEARCH FORM - STANDARD IONIC MARKUP
+    ====================== -->  
+    <!-- ======================
+    /END SEARCH FORM
+    ====================== --> 
+
+    <!-- ======================
+    POST - image only
+    ====================== --> 
+     <div class="news-media">
+    <div class="news-item">
+    
+      <div class="news-thumb">
+        <img src="http://nvmplay.com/ikm/templates/boomerang/assets/img/user-agent.png" alt="" class="img">
+      </div>
+      
+    <div class="news-content">
+        <h4>{{email.name_surname}}</h4>
+        <div class="gem-tiny-text news-item-stats">{{email.mail}}
+          <i class="icon ion-warning"></i> 
+          <span class="news-comment-summary">
+          <i class="ion-clock"></i> <time am-time-ago="email.date" title="{{ email.date | amDateFormat: 'dddd, MMMM Do YYYY, h:mm a' }}"></time> 
+            
+          </span>
+        </div>
+      </div>
+      
+    </div>
+    <div class="gem-post-content">
+     <p align="justify">{{email.message}}</p>
+      <p>Produk Id : {{email.property_id}} </p>
+      <p>No Telp : {{email.phone}} </p>
+      <p>Alamat : {{email.address}} </p>
+
+      <!-- Article Buttons-->
+      <!--<div class="row article-actions">
+        <a href="tel:{{product.listing.phone}}"><button class="button button-small gem-primary uppercase">
+          <i class="icon ion-android-call"></i> BALAS
+        </button></a>
+      </div>-->
+
+      <!-- End Article Buttons-->
+  
+      <!-- Comment Section -->
+  
+    </div>
+   
+     
+      <br><br>
+    </div>
+    
+    <!-- ======================
+    POSTER - profile thumb, name and post stats
+    ====================== --> 
+
+    
+      
+    <!-- ======================
+    /END POSTER
+    ====================== --> 
+
+    <!-- ======================
+    POST - image only
+    ====================== --> 
+    
+    <!-- ======================
+    /END POSTER
+    ====================== --> 
+  </ion-content>
+  <!-- ======================
+  END MAIN CONTENT SECTION
+  ====================== -->
+</ion-view>

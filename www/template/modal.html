@@ -1,0 +1,25 @@
+<script id="my-modal.html" type="text/ng-template">
+  <ion-modal-view>
+  
+  <ion-header-bar>
+    <h1 class="title">Kirim SMS</h1>
+    <div class="buttons">
+      <button class="button button-clear" ng-click="modal.hide()"><i class="icon ion-close-circled"></i></button>
+    </div>
+  </ion-header-bar>
+  <ion-content>
+    <form ng-submit="sendSms()" class="gem-form">
+      <div class="list">
+        <label class="item item-input item-floating-label">
+          <span class="input-label">Pesan</span>
+          <textarea ng-model="sms.message" placeholder="Tulis Pesan"></textarea>
+        </label>
+        <label class="item">
+          <button class="button button-block button-positive" type="submit">Kirim</button>
+        </label>
+      </div>
+    </form>
+  </ion-content>
+
+  </ion-modal-view>
+</script>

@@ -1,0 +1,140 @@
+<!-- Title for header bar (refer to www/index.html) the bar is hidden-->
+<ion-view title="{{product.listing.json_object.field_10}}" hide-nav-bar="true">
+  <!-- ======================
+  GEMIONIC CONTENT
+  ====================== -->
+  <ion-content class="gem-ion-content single-post">
+    <!-- Post media (sidebar button, picture, tags, and title) -->
+    <div class="gem-post-media">
+    
+      <!-- .topbar: sidebar button, post title, and post tags - overlaps the post-image further down -->
+      <div class="topbar">
+        <div class="row">
+          <div class="col col-25">
+            <button menu-toggle="left" class="button button-small button-icon icon ion-navicon-round gem-white"></button>
+          </div>
+          <div class="col col-50 text-center gem-white">
+            <h4>{{product.listing.name_surname}}</h4>
+          </div>
+        </div>
+      </div>
+      <!-- end topbar -->
+
+      <!-- post image -->
+      <img ng-if="product.listing.image_filename != null" src="http://nvmplay.com/ikm/files/{{product.listing.image_filename}}" alt="" class="fluid-image">
+      <img ng-if="product.listing.image_filename == null" src="http://nvmplay.com/ikm/files/no_image.jpg" alt="" class="fluid-image">
+
+      <!-- some stats (likes, hearts) -->
+      <h3 class="post-stat text-center"><i class="ion-star gem-white" ng-if="product.listing.field_56_int != null"></i> {{product.listing.field_56_int}} <i class="ion-star gem-white" ng-if="product.listing.field_56_int == null"> 0 </i> &nbsp;&nbsp;<i class="ion-eye gem-white"> </i> {{product.listing.counter_views}} &nbsp;&nbsp;<i class="ion-bookmark gem-white"> </i> {{product.listing.json_object.field_38}}</h3>
+      <!-- emd stats -->
+
+      <!-- bottom shadow - also overlaps the post image -->
+      <div class="bottombar-and-shadow"></div>
+      <!-- end bottom shadow -->
+
+    </div>
+
+    <!-- Post Content -->
+    <div class="gem-post-content">
+      <h2>{{product.listing.json_object.field_10}} </h2>
+      <p ng-bind-html="deskripsi" align="justify"></p>
+      <p><i class="icon ion-cash" ng-if="product.listing.field_36_int != null"> {{product.listing.field_36_int}}</i>
+            <i class="icon ion-cash star" ng-if="product.listing.field_36_int == null"> </i> Tanya Penjual</p>
+       <p ng-bind-html="trustSrc(link)"></p>
+      <p class="post-date"><i class="ion-clock"></i> <time am-time-ago="product.listing.date_modified" title="{{ product.listing.date_modified | amDateFormat: 'dddd, MMMM Do YYYY, h:mm a' }}"></time></p>
+
+      <!-- Article Buttons-->
+      <div class="row article-actions">
+        <a href="tel:{{product.listing.phone}}"><button class="button button-small gem-success uppercase">
+          <i class="icon ion-android-call"></i> Telpon
+        </button></a>
+        <a href="sms:{{product.listing.phone}}"><button class="button button-small gem-primary uppercase">
+          <i class="icon ion-chatbubble"></i> SMS
+        </button></a>
+        <button class="button button-small gem-danger uppercase" ng-click="inApp(product.url)">
+          <i class="icon ion-android-globe"></i> Lihat di Web
+        </button>
+        
+      </div>
+
+      <!-- End Article Buttons-->
+  
+      <!-- Comment Section -->
+      <div class="article-comments">
+      <form ng-submit="sendMail()" class="gem-form">
+      <input type="text" ng-model="mail.produk" value="{{product.listing.property_id}}">
+       <h3>Kirim Email</h3>
+       <p ng-bind-html="pesan" align="justify"></p>
+      <div class="list">
+  <label class="item item-input item-stacked-label">
+    <span class="input-label">Nama Lengkap</span>
+    <input type="text" ng-model="mail.nama" required="required">
+  </label>
+   <label class="item item-input item-stacked-label">
+    <span class="input-label">Email</span>
+    <input type="email" ng-model="mail.email" required="required">
+  </label>
+  <label class="item item-input item-stacked-label">
+    <span class="input-label">No Telp</span>
+    <input type="text" ng-model="mail.telp"  required="required">
+  </label>
+  <label class="item item-input item-stacked-label">
+    <span class="input-label">Alamat</span>
+    <input type="text" ng-model="mail.alamat" required="required">
+    
+  </label>
+  <label class="item item-input item-stacked-label">
+    <span class="input-label">Pesan</span>
+    <textarea ng-model="mail.pesan" required="required"></textarea>
+     
+  </label>
+
+          <button class="button button-block button-positive" type="submit">Kirim</button>
+        
+</div>
+</form>
+      <div id="fb-root"></div>
+      <div class="fb-comments" data-href="{{product.url}}" data-width="100%" data-numposts="5" data-colorscheme="light"></div>
+       
+
+        <!-- Comment Item -->
+        <h3>Produk Lainnya</h3>
+        <div class="profile-feed">
+      <div class="row">
+      
+        <div class="col" >
+
+            <div class="profile-post" ng-repeat="produk in produks"	>
+              <a ng-href="#/app/products/{{produk.listing.property_id}}">
+      <img ng-if="produk.listing.image_filename !=''" src="http://nvmplay.com/ikm/files/{{produk.listing.image_filename}}" alt="" class="fluid-image">
+      <img ng-if="produk.listing.image_filename == null " src="http://nvmplay.com/ikm/files/no_image.jpg" alt="" class="fluid-image">
+       </a>
+              <p>{{produk.listing.json_object.field_10}}</p>
+              <span class="profile-post-stat"><i class="ion-star" ng-if="produk.listing.field_56_int != null"> </i> {{produk.listing.field_56_int}} <i class="ion-star enol" ng-if="produk.listing.field_56_int == null"> 0 </i></span>
+              <span class="profile-post-stat"><i class="ion-eye"> </i>  {{produk.listing.counter_views}}</span>
+               <span class="profile-post-stat"><i class="icon ion-cash" ng-if="produk.listing.field_36_int != null"> {{produk.listing.field_36_int}}</i>
+            <i class="icon ion-cash" ng-if="produk.listing.field_36_int == null"></i> Tanya Penjual </span>
+            </div>
+            </div>
+      </div>
+    </div>
+          <!-- End Comment item -->
+
+          <!-- Comment Item -->
+       
+          <!-- End Comment item -->
+
+          <!-- Comment Item -->
+       
+          <!-- End Comment item -->
+
+
+      </div>
+  
+    </div>
+    
+
+
+  </ion-content>
+</ion-view>
+
