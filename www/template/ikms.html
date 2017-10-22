@@ -65,10 +65,10 @@
       <img ng-if="product.listing.image_filename == null " src="http://nvmplay.com/ikm/files/no_image.jpg" alt="" class="fluid-image">
        </a>
               <p>{{product.listing.json_object.field_10}}</p>
-              <span class="profile-post-stat"><i class="ion-android-star" ng-if="product.listing.field_56_int != null"> {{product.listing.field_56_int}}</i> <i class="ion-android-star" ng-if="product.listing.field_56_int == null"> 0</i></span>
-              <span class="profile-post-stat"><i class="ion-eye"> {{product.listing.counter_views}}</i></span>
+              <span class="profile-post-stat"><i class="ion-android-star" ng-if="product.listing.field_56_int != null"> </i> {{product.listing.field_56_int}} <i class="ion-star" ng-if="product.listing.field_56_int == null"> 0</i></span>
+              <span class="profile-post-stat"><i class="ion-eye"> </i> {{product.listing.counter_views}}</span>
                <span class="profile-post-stat"><i class="icon ion-cash" ng-if="product.listing.field_36_int != null"> {{product.listing.field_36_int}}</i>
-            <i class="icon ion-cash" ng-if="product.listing.field_36_int == null"> Tanya Penjual</i></span>
+            <i class="icon ion-cash" ng-if="product.listing.field_36_int == null"> </i> Tanya Penjual</span>
             </div>
             </div>
       </div>
@@ -101,7 +101,7 @@
                <div class="profile-feed">
       <div class="row">
         <div class="col" >
-            <div class="profile-post">
+            <div class="video-container">
              <p ng-bind-html="trustSrc(link)"></p>
             </div>
             </div>

@@ -1,7 +1,7 @@
 angular.module('wooshop', ['ionic', 'wooshop.controllers', 'wooshop.services','wooshop.directives','ngCordova','angularMoment','cera.ionicSuperPopup'])
 
 .run(function($rootScope, $ionicPlatform, $ionicLoading, $ionicPopup, $ionicHistory,$state,ikmAuth) {
-  $ionicPlatform.ready(function() {
+  $ionicPlatform.on("deviceready", function(){
      
    
     // $ionicConfigProvider.views.maxCache(0);
@@ -67,7 +67,8 @@ angular.module('wooshop', ['ionic', 'wooshop.controllers', 'wooshop.services','w
 })
 
 .config(function($stateProvider, $urlRouterProvider, $httpProvider,$ionicConfigProvider) {
-  // $ionicConfigProvider.views.maxCache(0); 
+   $ionicConfigProvider.views.maxCache(0); 
+   $ionicConfigProvider.backButton.icon('ion-arrow-left-c');
   $stateProvider
   
   .state('app', {
@@ -99,7 +100,7 @@ angular.module('wooshop', ['ionic', 'wooshop.controllers', 'wooshop.services','w
       }
     })
   .state('app.home', {
-   //cache: false,
+   cache: true,
       url: '/home',
       views: {
         'menuContent': {

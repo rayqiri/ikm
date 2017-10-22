@@ -178,7 +178,7 @@ app.service('wooshopService', function($http, $q){
         return deferred.promise;
     }
 })
-app.service('ikmAuth', function($http, $q){
+app.service('ikmAuth', function($http, $q,$cordovaFileTransfer){
 
     var link = "http://nvmplay.com/ikm/index.php/tokenapi";
     var api = '4PcY4Dku0JkuretevfEPMnG9BGBPi';
@@ -268,6 +268,29 @@ this.doLogin =  function(username,password) {
             deferred.resolve(data);
         })
     }
+
+        return deferred.promise;
+    }
+     this.uploadProduk =  function(url,path) {
+        var deferred = $q.defer();
+        var data = [];
+        //var token = JSON.parse(window.localStorage.token || null);
+         $http.post(url, path, {
+                transformRequest: angular.identity,
+                headers: {'Content-Type': undefined}
+ 
+            }).then(function(data) {
+        data = data.data;
+        deferred.resolve(data);
+    })
+       /* $http({
+            method: 'GET',
+           url: link+'/submission/?token='+token+'&lang_code=en&input_title='+nama+'&keyword='+keyword+'&kategori='+kategori+'&input_description='+deskripsi+'&input_38='+status
+        })
+        .then(function(data){
+            data = data.data;
+            deferred.resolve(data);
+        })*/
 
         return deferred.promise;
     }

@@ -1,6 +1,9 @@
 var app = angular.module('wooshop.controllers', ['wooshop.services','wooshop.directives'])
 
-app.controller('AppCtrl', function(ionicSuperPopup,$location,$ionicHistory, $window,$scope, ikmAuth, $ionicLoading, $ionicModal, $timeout, $state,$cordovaInAppBrowser) {
+app.controller('AppCtrl', function($ionicSideMenuDelegate,ionicSuperPopup,$location,$ionicHistory, $window,$scope, ikmAuth, $ionicLoading, $ionicModal, $timeout, $state,$cordovaInAppBrowser) {
+      $scope.toggleLeft = function() {
+    $ionicSideMenuDelegate.toggleLeft();
+  };
       ikmAuth.userIsLoggedIn().then(function(response)
       {
         if(response === false)
@@ -14,6 +17,7 @@ app.controller('AppCtrl', function(ionicSuperPopup,$location,$ionicHistory, $win
       $scope.foto=localStorage.getItem("foto");
        $scope.id=localStorage.getItem("id");
        $scope.token=localStorage.getItem("token");
+       $scope.total=localStorage.getItem("email");
         }
         });
      $scope.total=0;
@@ -306,6 +310,37 @@ app.controller('KategoriCtrl', function($state,$rootScope, $scope, wooshopServic
 })
 
 app.controller('ProductCtrl', function($ionicModal,$rootScope, $scope, $stateParams, wooshopService,$cordovaInAppBrowser,$sce) {
+ $scope.waShare=function(nama,gambar,url){
+    window.plugins.socialsharing.shareViaWhatsApp(nama, gambar /* img */, url /* url */, null, 
+      function(errormsg){
+        $scope.eror('Gagal Share');
+      });
+  };
+  $scope.fbShare=function(nama,gambar,url){
+    window.plugins.socialsharing.shareViaFacebook(nama, gambar /* img */, url /* url */, null, 
+      function(errormsg){
+        $scope.eror('Gagal Share');
+      });
+  };
+  $scope.twShare=function(nama,gambar,url){
+    window.plugins.socialsharing.shareViaTwitter(nama, gambar /* img */, url /* url */, null, 
+      function(errormsg){
+        $scope.eror('Gagal Share');
+      });
+  };
+  $scope.igShare=function(nama,gambar){
+    window.plugins.socialsharing.shareViaInstagram(nama, gambar , null, 
+      function(errormsg){
+        $scope.eror('Gagal Share');
+      });
+  };
+$scope.share=function(nama,gambar,url){
+    window.plugins.socialsharing.share(nama, null , gambar /* img */, url /* url */, null, 
+      function(errormsg){
+        $scope.eror('Gagal Share');
+      });
+  };
+
  $scope.show();
  
  $scope.mail={};
@@ -412,6 +447,7 @@ app.controller('EmailCtrl', function($scope, $stateParams, ikmAuth, $stateParams
     ikmAuth.getEmail(token,id).then(function(data){
         
             $scope.emails = data.email;
+            localStorage.setItem("email",data.total);
             $scope.total = data.total;
             //console.log($scope.products);
             $scope.hide();
@@ -446,68 +482,24 @@ app.controller('AboutCtrl', function($scope, $stateParams, wooshopService, $stat
         
     })
 })
-app.controller('TambahCtrl', function($scope, $stateParams, ikmAuth, $stateParams, wooshopService,$cordovaCamera, $cordovaFile, $cordovaFileTransfer, $cordovaDevice, $ionicPopup, $cordovaActionSheet) {
+app.controller('TambahCtrl', function($state,$scope, $stateParams, ikmAuth, $stateParams, wooshopService,$cordovaCamera, $cordovaFile, $cordovaFileTransfer, $cordovaDevice, $ionicPopup, $cordovaActionSheet) {
   var token=localStorage.getItem("token");
   $scope.produk={};
    wooshopService.getKategori().then(function(data) {
   
       $scope.kategoris = data.tree;
-   
-        $scope.hide();
     })
 //simpan produk
 var data = {};
     $scope.produk = {id: ''};
-   $scope.simpanProduk = function(){
-    $scope.buka();
-    var kategori ="Produk IKM - "+$scope.produk.kategori;
-    data = {
-      'id' : $scope.produk.id,
-      'kategori' : kategori,
-      'nama' : $scope.produk.nama,
-      'keyword' : $scope.produk.keyword,
-      'deskripsi' : $scope.produk.deskripsi,
-      'status' : $scope.produk.status,
-      'gambar' : $scope.produk.file
-    };
-    console.log(data);
- ikmAuth.prosesProduk(token,$scope.produk.id,kategori,$scope.produk.nama,$scope.produk.keyword,$scope.produk.status,$scope.produk.deskripsi).then(function(data){
-        
-            $scope.pesan = data.message;
-            //localStorage.setItem("email",data.total)
-            //$scope.total = data.total;
-            //console.log($scope.products);
-            $scope.property_id=data.property_id;
-            var url = "http://nvmplay.com/ikm/index.php/tokenapi/submission/?token="+token+'&lang_code=en&input_title='+$scope.produk.nama+'&keyword='+$scope.produk.keyword+'&kategori='+kategori+'&input_description='+$scope.produk.deskripsi+'&input_38='+$scope.produk.status+'&property_id='+$scope.property_id;
-
-    // File for Upload
-    var targetPath = $scope.pathForImage($scope.image);
-
-    // File name only
-    var filename = $scope.image;
-if (filename !=''){
-    var options = {
-      fileKey: "file",
-      fileName: filename,
-      chunkedMode: false,
-      mimeType: "multipart/form-data",
-      params : {'fileName': filename}
-    };
-
-    $cordovaFileTransfer.upload(url, targetPath, options).then(function(result) {
-     $scope.sukses($scope.pesan);// $scope.showAlert('Success', 'Image upload finished.');
-    });
-            $scope.produk={};
-            $scope.image = null;
-            $scope.tutup();
-          }else{
-            $scope.sukses($scope.pesan);
-            $scope.tutup();
-          }
-        
-    })
-   };
-   $scope.image = null;
+    $scope.pathForImage = function(image) {
+    if (image === null) {
+      return '';
+    } else {
+      return cordova.file.dataDirectory + image;
+    }
+  };
+  $scope.image = null;
 
   // Present Actionsheet for switch beteen Camera / Library
   $scope.loadImage = function() {
@@ -517,6 +509,7 @@ if (filename !=''){
       addCancelButtonWithLabel: 'Cancel',
       androidEnableCancelButton : true,
     };
+    document.addEventListener('deviceready', function () {
     $cordovaActionSheet.show(options).then(function(btnIndex) {
       var type = null;
       if (btnIndex === 1) {
@@ -528,18 +521,19 @@ if (filename !=''){
         $scope.selectPicture(type);
       }
     });
+  });
   };
 
   // Take image with the camera or from library and store it inside the app folder
   // Image will not be saved to users Library.
   $scope.selectPicture = function(sourceType) {
     var options = {
-      quality: 100,
+      quality: 80,
       destinationType: Camera.DestinationType.FILE_URI,
       sourceType: sourceType,
       saveToPhotoAlbum: false
     };
-
+    document.addEventListener('deviceready', function () {
     $cordovaCamera.getPicture(options).then(function(imagePath) {
       // Grab the file name of the photo in the temporary directory
       var currentName = imagePath.replace(/^.*[\\\/]/, '');
@@ -560,10 +554,12 @@ if (filename !=''){
           function success(fileEntry) {
             var namePath = fileEntry.nativeURL.substr(0, fileEntry.nativeURL.lastIndexOf('/') + 1);
             // Only copy because of access rights
+            document.addEventListener('deviceready', function () {
             $cordovaFile.copyFile(namePath, fileEntry.name, cordova.file.dataDirectory, newFileName).then(function(success){
               $scope.image = newFileName;
             }, function(error){
               $scope.showAlert('Error', error.exception);
+            });
             });
           };
         }
@@ -571,28 +567,120 @@ if (filename !=''){
       } else {
         var namePath = imagePath.substr(0, imagePath.lastIndexOf('/') + 1);
         // Move the file to permanent storage
+        document.addEventListener('deviceready', function () {
         $cordovaFile.moveFile(namePath, currentName, cordova.file.dataDirectory, newFileName).then(function(success){
           $scope.image = newFileName;
         }, function(error){
           $scope.showAlert('Error', error.exception);
         });
+      });
       }
     },
     function(err){
       // Not always an error, maybe cancel was pressed...
     })
+  }, false);
   };
+   $scope.simpanProduk = function(){
+    $scope.buka();
+    var kategori ="Produk IKM - "+$scope.produk.kategori;
+    data = {
+      'id' : $scope.produk.id,
+      'kategori' : kategori,
+      'nama' : $scope.produk.nama,
+      'keyword' : $scope.produk.keyword,
+      'deskripsi' : $scope.produk.deskripsi,
+      'status' : $scope.produk.status,
+      'gambar' : $scope.produk.file
+    };
+    //console.log(data);
+   
+ ikmAuth.prosesProduk(token,$scope.produk.id,kategori,$scope.produk.nama,$scope.produk.keyword,$scope.produk.status,$scope.produk.deskripsi).then(function(data){
+        
+           $scope.pesan = data.message;
+            //localStorage.setItem("email",data.total)
+            //$scope.total = data.total;
+            //console.log($scope.products);
+            var property_id=data.property_id;
+           var url = "http://nvmplay.com/ikm/index.php/tokenapi/upload/";
+            //var url="http://nvmplay.com/ikm/api/upload.php";
+    // File for Upload
+    var targetPath = $scope.pathForImage($scope.image);
+
+
+    // File name only
+    var filename = $scope.image;
+if (filename !=null){
+  /*$cordovaFileTransfer.onprogress = function(progressEvent) {
+    if (progressEvent.lengthComputable) {
+        loadingStatus.setPercentage(progressEvent.loaded / progressEvent.total);
+        $ionicLoading.show({
+      template: '<ion-spinner icon="dots" class="spinner-calm"></ion-spinner> <br>Proses...'
+    });
+    } else {
+        loadingStatus.increment();
+    }
+};*/
+    var options = {
+      fileKey: "file",
+      fileName: filename,
+      chunkedMode: false,
+      //mimeType: "image/jpeg",
+      httpMethod : "POST",
+      mimeType: "multipart/form-data",
+     params : {
+      'token': token,
+      'lang_code': 'en',
+      'property_id' : property_id
+
+      }
+    };
+/*var win = function (r) {
+  console.log(JSON.stringify(r.response));
+     $scope.sukses($scope.pesan);// $scope.showAlert('Success', 'Image upload finished.');
+      $scope.produk={};
+            $scope.image = null;
+            $scope.tutup();
+}
+
+var fail = function (error) {
+  console.log(error.code);
+    $scope.error("An error has occurred: Code = " + error.code+"<br>upload error source " + error.source+"<br>upload error target " + error.target);
+    $scope.tutup();
+}*/
+
+
+//$cordovaFile.uploadFile(url, 'img/default.jpg', win, fail, options);
+document.addEventListener('deviceready', function () {
+    $cordovaFileTransfer.upload(url, targetPath, options, true).then(function(result) {
+     $scope.sukses(result.message);// $scope.showAlert('Success', 'Image upload finished.');
+      $scope.produk={};
+            $scope.image = null;
+            $scope.tutup();
+            $state.go('app.produkikm');
+    },function(err) {
+        $scope.error("ERROR: " + JSON.stringify(err.http_status) +" and "+ JSON.stringify(err.exception));
+        console.log("ERROR: " + JSON.stringify(err));
+    $scope.tutup();
+      });
+    },false);
+           
+         }else{
+            $scope.produk={};
+            $scope.image = null;
+            $scope.sukses($scope.pesan);
+            $scope.tutup();
+             $state.go('app.produkikm');
+          }
+        
+    })
+   };
+   
 
   // Returns the local path inside the app for an image
-  $scope.pathForImage = function(image) {
-    if (image === null) {
-      return '';
-    } else {
-      return cordova.file.dataDirectory + image;
-    }
-  };
+  
 
-  $scope.uploadImage = function() {
+ /* $scope.uploadImage = function() {
     // Destination URL
     // var url = "http://localhost:8888/upload.php";
     var url = "https://devdactic.com/downloads/upload.php";
@@ -614,7 +702,7 @@ if (filename !=''){
     $cordovaFileTransfer.upload(url, targetPath, options).then(function(result) {
       $scope.showAlert('Success', 'Image upload finished.');
     });
-  }
+  };*/
 
   $scope.showAlert = function(title, msg) {
     var alertPopup = $ionicPopup.alert({
@@ -625,7 +713,9 @@ if (filename !=''){
   
 })
 app.controller('ProdukIkmCtrl', function($state,$rootScope, $scope, ikmAuth,$timeout,ionicSuperPopup, $stateParams) {
-
+$scope.tambahProduk = function(){
+$state.go('app.tambahproduk');
+};
    $scope.toggle = function() {
     $scope.variable = !$scope.variable
     console.log($scope.variable);
@@ -677,7 +767,8 @@ $scope.hapus = function(id, produk){
       ikmAuth.hapusProduk(id).then(function(data) {
 
      ionicSuperPopup.show("Berhasil!", data.message, "success");
-     $state.go($state.current, $stateParams, {reload: true, inherit: false});
+     $scope.doRefresh();
+     $state.go('app.produkikm');
    });
      } else {
         ionicSuperPopup.show("Gagal!", "Anda Gagal Dihapus", "error");

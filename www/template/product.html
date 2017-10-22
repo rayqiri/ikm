@@ -40,7 +40,15 @@
       <p ng-bind-html="deskripsi" align="justify"></p>
       <p><i class="icon ion-cash" ng-if="product.listing.field_36_int != null"> {{product.listing.field_36_int}}</i>
             <i class="icon ion-cash star" ng-if="product.listing.field_36_int == null"> </i> Tanya Penjual</p>
-       <p ng-bind-html="trustSrc(link)"></p>
+       <p class="video-container" ng-bind-html="trustSrc(link)"></p>
+       <br>
+       <p class="share">SHARE &nbsp;<i class="icon ion-social-facebook" ng-click="fbShare(product.listing.json_object.field_10,'http://nvmplay.com/ikm/files/'+product.listing.image_filename,product.url)"></i>&nbsp;&nbsp;
+            <i class="icon ion-social-twitter" ng-click="twShare(product.listing.json_object.field_10,'http://nvmplay.com/ikm/files/'+product.listing.image_filename,product.url)"> </i>&nbsp;&nbsp;
+            <i class="icon ion-social-whatsapp" ng-click="waShare(product.listing.json_object.field_10,'http://nvmplay.com/ikm/files/'+product.listing.image_filename,product.url)"> </i>&nbsp;&nbsp;
+            <i class="icon ion-social-instagram" ng-click="igShare(product.listing.json_object.field_10,'http://nvmplay.com/ikm/files/'+product.listing.image_filename)"> </i>&nbsp;&nbsp;
+              <i class="icon ion-android-share-alt" ng-click="share(product.listing.json_object.field_10,'http://nvmplay.com/ikm/files/'+product.listing.image_filename,product.url)"> </i>
+
+            </p>
       <p class="post-date"><i class="ion-clock"></i> <time am-time-ago="product.listing.date_modified" title="{{ product.listing.date_modified | amDateFormat: 'dddd, MMMM Do YYYY, h:mm a' }}"></time></p>
 
       <!-- Article Buttons-->

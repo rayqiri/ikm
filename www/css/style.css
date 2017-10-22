@@ -399,6 +399,10 @@ a {
   
   font-size: 20px;
 }
+.share{
+  
+  font-size: 24px;
+}
 .ion-home{
   color : red;
 }
@@ -432,4 +436,25 @@ a {
 
 .ion-log-out{
   color : red;
+}
+.ion-social-facebook{
+  color : #3b5998;
+}
+.ion-social-twitter{
+  color : #00aced;
+}
+.ion-social-instagram{
+  color : #bc2a8d;
+}
+.ion-social-whatsapp{
+  color : #7CFC00;
+}
+.ion-social-youtube{
+  color : #e64a41;
+}
+.ion-information{
+  color : #0000FF;
+}
+.ion-filing{
+color:    #DAA520;
 }
