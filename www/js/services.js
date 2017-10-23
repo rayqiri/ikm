@@ -228,6 +228,21 @@ this.doLogin =  function(username,password) {
 
         return deferred.promise;
     }
+    this.delEmail =  function(token,emailId) {
+        var deferred = $q.defer();
+        var data = [];
+        
+        $http({
+            method: 'GET',
+           url: link+'/emaildelete/?token='+token+'&email='+emailId
+        })
+        .then(function(data){
+            data = data.data;
+            deferred.resolve(data);
+        })
+
+        return deferred.promise;
+    }
     this.userIsLoggedIn =  function() {
         var deferred = $q.defer();
         var data = [];

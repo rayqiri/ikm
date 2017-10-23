@@ -37,9 +37,9 @@
     <!-- ======================
     GEMIONIC FRIEND LIST (VERTICAL LIST)
     ====================== -->
-    <ul class="list gem-friend-list">
+    <ion-list show-delete="data.showDelete" show-reorder="data.showReorder" class="list gem-friend-list" show-delete="data.showDelete" show-reorder="data.showReorder">
           <!-- Single Friend Item -->
-          <li class="item" ng-repeat="email in emails |filter:search |orderBy : 'readed'">
+          <ion-item class="item" ng-repeat="email in emails |filter:search |orderBy : 'readed'">
             <!-- thumb image (round) -->
            
             <img src="http://nvmplay.com/ikm/templates/boomerang/assets/img/user-agent.png" alt="" class="gem-friend-list-profile-pic"> <!-- End Image - absolute left/top -->
@@ -50,13 +50,18 @@
               <b>{{email.name_surname}}</b>
               </a>
                <span class="signature"><i class="ion-clock"></i> <time am-time-ago="email.date" title="{{ email.date | amDateFormat: 'dddd, MMMM Do YYYY, h:mm a' }}"> </time>   <i ng-if="email.readed=='0'" class="icon ion-record gem-color-danger"> "Belum Dibaca"</i> </span>
+          <ion-option-button class="button button-icon icon ion-trash-a"
+                             ng-click="delItem(email)">
+          </ion-option-button>
+          <ion-reorder-button class="ion-navicon" on-reorder="moveItem(email, $fromIndex, $toIndex)"></ion-reorder-button>
             </div>
             <!-- end -->
-            
-          </li>
+           
+         
+          </ion-item>
           <!-- Single Friend Item -->
          
-      </ul>
+      </ion-list>
   </ion-content>
   <!-- ======================
   END MAIN CONTENT SECTION

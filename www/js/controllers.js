@@ -440,7 +440,7 @@ app.controller('IkmCtrl', function($scope, $stateParams, wooshopService, $stateP
         
     })
 })
-app.controller('EmailCtrl', function($scope, $stateParams, ikmAuth, $stateParams) {
+app.controller('EmailCtrl', function($scope, $stateParams, ikmAuth, $stateParams,$ionicListDelegate) {
     $scope.show();
     var token = localStorage.getItem("token");
     var id = localStorage.getItem("id");
@@ -453,6 +453,40 @@ app.controller('EmailCtrl', function($scope, $stateParams, ikmAuth, $stateParams
             $scope.hide();
         
     })
+    $scope.data = {
+    showDelete: false
+  };
+  
+  $scope.edit = function(item) {
+    alert('Edit Item: ' + item.id);
+  };
+  $scope.share = function(item) {
+    alert('Share Item: ' + item.id);
+    $ionicListDelegate.closeOptionButtons();  // this closes swipe option buttons after alert
+  };
+  
+  $scope.moveItem = function(item, fromIndex, toIndex) {
+    $scope.emails.splice(fromIndex, 1);
+    $scope.emails.splice(toIndex, 0, item);
+  };
+
+  $scope.delItem = function(item) {
+    $scope.emails.splice($scope.emails.indexOf(item), 1);
+     
+    //var id = localStorage.getItem("id");
+    ikmAuth.delEmail(token,item.id).then(function(data){
+        
+            $scope.message = data.message;
+        
+    })
+    $ionicListDelegate.closeOptionButtons();
+  };
+
+  
+  $scope.onItemDelete = function(item) {
+    $scope.emails.splice($scope.emails.indexOf(item), 1);
+    $scope.data.showDelete = false;  // this closes delete-option buttons after delete
+  };
 })
 app.controller('EmailidCtrl', function($scope, $stateParams, ikmAuth, $stateParams) {
     $scope.show();
